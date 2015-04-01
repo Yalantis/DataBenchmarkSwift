@@ -9,12 +9,12 @@
 import Foundation
 
 class LinkedNode<T> {
-    var storedValue: T?
-    var link: LinkedNode?
+    var storedValue: T
+    var next: LinkedNode?
     
     init(value: T, nextLinkedNode node: LinkedNode) {
         self.storedValue = value
-        self.link = node
+        self.next = node
     }
     
     init(value: T) {

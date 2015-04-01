@@ -9,12 +9,10 @@
 import UIKit
 import XCTest
 
-private let iterationCount = 10000
+private let iterationCount = 100000
 private let testString = "test"
 
 class DataBenchmarkSwiftTests: XCTestCase {
-    
-
     
     override func setUp() {
         super.setUp()
@@ -153,6 +151,34 @@ class DataBenchmarkSwiftTests: XCTestCase {
             find(testDictionary.values, toFound)
         }
     }
+    
+    //Linked lists
+    
+    func testLinkedListWriteSpeed() {
+        self.measureBlock() {
+            self.generateLinkedList()
+        }
+    }
+    
+    func testLinkedListFastEnumReadSpeed() {
+        var testLinkedList = self.generateLinkedList()
+        
+        self.measureBlock() {
+            for str in testLinkedList {
+                let constant = str
+            }
+        }
+    }
+    
+    func testLinkedListFastEnumDeleteSpeed() {
+        var testLinkedList = self.generateLinkedList()
+        
+        self.measureBlock() {
+            for item in testLinkedList {
+                testLinkedList.removeFirst(item)
+            }
+        }
+    }
 
     func generateArray() -> [String] {
         var testArray = [String]()
@@ -179,6 +205,15 @@ class DataBenchmarkSwiftTests: XCTestCase {
         }
         
         return testDictionary
+    }
+    
+    func generateLinkedList() -> LinkedList<String> {
+        var testLinkedList = LinkedList<String>()
+        for var i = 0; i < iterationCount; i++ {
+            testLinkedList.add(testString + String(i))
+        }
+        
+        return testLinkedList
     }
 
     
