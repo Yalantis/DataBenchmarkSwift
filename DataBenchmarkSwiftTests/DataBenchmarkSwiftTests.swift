@@ -62,11 +62,19 @@ class DataBenchmarkSwiftTests: XCTestCase {
         }
     }
     
-    func testArrayFindSpeed() {
+    func testArrayIndexOfSpeed() {
         var testArray = self.generateArray()
         let last = testArray.last!
         self.measureBlock() {
             find(testArray, last)
+        }
+    }
+    
+    func testArrayContainSpeed() {
+        var testArray = self.generateArray()
+        let last = testArray.last!
+        self.measureBlock() {
+            contains(testArray, last)
         }
     }
     
@@ -98,11 +106,11 @@ class DataBenchmarkSwiftTests: XCTestCase {
         }
     }
     
-    func testSetFindSpeed() {
+    func testSetContainsSpeed() {
         var testSet = self.generateSet()
         let toFound = testString + String(iterationCount - 1)
         self.measureBlock() {
-            testSet.indexOf(toFound)
+            testSet.contains(toFound)
         }
     }
     
@@ -144,11 +152,11 @@ class DataBenchmarkSwiftTests: XCTestCase {
         }
     }
     
-    func testDictionaryFindSpeed() {
+    func testDictionaryContainsSpeed() {
         var testDictionary = self.generateDictionary()
         let toFound = testString + String(iterationCount - 1)
         self.measureBlock() {
-            find(testDictionary.values, toFound)
+            contains(testDictionary.values, toFound)
         }
     }
     
@@ -179,6 +187,8 @@ class DataBenchmarkSwiftTests: XCTestCase {
             }
         }
     }
+    
+    //MARK: Helper methods
 
     func generateArray() -> [String] {
         var testArray = [String]()
