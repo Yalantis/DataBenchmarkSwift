@@ -10,7 +10,6 @@ import Foundation
 
 class LinkedList<T: Equatable>: SequenceType {
     private var startNode: LinkedNode<T>?
-    private var lastNode: LinkedNode<T>?
     
     init() {
         
@@ -18,11 +17,27 @@ class LinkedList<T: Equatable>: SequenceType {
     
     init(value: T) {
         self.startNode = LinkedNode(value: value)
-        self.lastNode = self.startNode
+    }
+    
+    func generate() -> LinkedListGenerator<T> {
+        return LinkedListGenerator(list: self)
+    }
+}
+
+class OptimizedLinkedList<T: Equatable>: LinkedList<T> {
+    private var lastNode: LinkedNode<T>?
+    
+    override init() {
+       super.init()
     }
     
     var last: T? {
         return self.lastNode?.storedValue
+    }
+    
+    override init(value: T) {
+        super.init(value: value)
+        self.lastNode = self.startNode
     }
     
     func add(value: T) {
@@ -62,11 +77,51 @@ class LinkedList<T: Equatable>: SequenceType {
         }
         return false
     }
+}
+
+class Stack<T: Equatable>: LinkedList<T> {
     
-    func generate() -> LinkedListGenerator<T> {
-        return LinkedListGenerator(list: self)
+    override init() {
+        super.init()
     }
     
+    func push(value: T) {
+        let newNode = LinkedNode(value: value)
+        if (self.startNode != nil) {
+            newNode.next = self.startNode
+        }
+        self.startNode = newNode
+    }
+    
+    func pop() -> T? {
+        if (self.startNode == nil) {
+            return nil
+        }
+        
+        let outcomeValue = self.startNode!.storedValue
+        self.startNode = self.startNode!.next
+        
+        return outcomeValue
+    }
+    
+}
+
+class Queue<T: Equatable>: OptimizedLinkedList<T> {
+    
+    override init() {
+        super.init()
+    }
+    
+    func dequeue() -> T? {
+        if (self.startNode == nil) {
+            return nil
+        }
+        
+        let outcomeValue = self.startNode!.storedValue
+        self.startNode = self.startNode!.next
+        
+        return outcomeValue
+    }
 }
 
 struct LinkedListGenerator<T : Equatable>: GeneratorType {

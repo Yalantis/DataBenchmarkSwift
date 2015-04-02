@@ -188,6 +188,42 @@ class DataBenchmarkSwiftTests: XCTestCase {
         }
     }
     
+    //MARK: Stacks
+    
+    func testStackWriteSpeed() {
+        self.measureBlock() {
+            self.generateStack()
+        }
+    }
+    
+    func testStackReadSpeed() {
+        let testStack = self.generateStack()
+        
+        self.measureBlock() {
+            for _ in 0..<iterationCount {
+                let constant = testStack.pop()
+            }
+        }
+    }
+    
+    //MARK: Queues
+    
+    func testQueueWriteSpeed() {
+        self.measureBlock() {
+            self.generateQueue()
+        }
+    }
+    
+    func testQueueReadSpeed() {
+        let testQueue = self.generateQueue()
+        
+        self.measureBlock() {
+            for _ in 0..<iterationCount {
+                let constant = testQueue.dequeue()
+            }
+        }
+    }
+    
     //MARK: Helper methods
 
     func generateArray() -> [String] {
@@ -217,14 +253,33 @@ class DataBenchmarkSwiftTests: XCTestCase {
         return testDictionary
     }
     
-    func generateLinkedList() -> LinkedList<String> {
-        var testLinkedList = LinkedList<String>()
+    func generateLinkedList() -> OptimizedLinkedList<String> {
+        var testLinkedList = OptimizedLinkedList<String>()
         for var i = 0; i < iterationCount; i++ {
             testLinkedList.add(testString + String(i))
         }
         
         return testLinkedList
     }
+    
+    func generateStack() -> Stack<String> {
+        var testStack = Stack<String>()
+        for var i = 0; i < iterationCount; i++ {
+            testStack.push(testString + String(i))
+        }
+        
+        return testStack
+    }
+    
+    func generateQueue() -> Queue<String> {
+        var testQueue = Queue<String>()
+        for var i = 0; i < iterationCount; i++ {
+            testQueue.add(testString + String(i))
+        }
+        
+        return testQueue
+    }
+
 
     
 }
