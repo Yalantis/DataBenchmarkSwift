@@ -175,7 +175,7 @@ class DataBenchmarkSwiftTests: XCTestCase {
         
         self.measureBlock() {
             for item in testLinkedList {
-                testLinkedList.removeFirst(item)
+                testLinkedList.removeFirstOccurenceOf(item)
             }
         }
     }

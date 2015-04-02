@@ -9,11 +9,7 @@
 import Foundation
 
 class LinkedList<T: Equatable>: SequenceType {
-    private var startNode: LinkedNode<T>? {
-        didSet {
-            self.lastNode = self.startNode
-        }
-}
+    private var startNode: LinkedNode<T>?
     private var lastNode: LinkedNode<T>?
     
     init() {
@@ -33,13 +29,13 @@ class LinkedList<T: Equatable>: SequenceType {
         let newNode = LinkedNode(value: value)
         if let node = self.lastNode {
             node.next = newNode
-            self.lastNode = newNode
         } else {
             self.startNode = newNode
         }
+        self.lastNode = newNode
     }
     
-    func removeFirst(value: T) -> Bool {
+    func removeFirstOccurenceOf(value: T) -> Bool {
         if (self.startNode == nil) {
             return false
         }
@@ -49,6 +45,9 @@ class LinkedList<T: Equatable>: SequenceType {
             if (currentNode!.storedValue == value) {
                 if (prevNode == nil) {
                     self.startNode = currentNode!.next
+                    if (currentNode!.next == nil) {
+                        self.lastNode = self.startNode
+                    }
                 } else {
                     prevNode!.next = currentNode!.next
                     if (currentNode!.next == nil) {
