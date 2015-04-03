@@ -224,6 +224,18 @@ class DataBenchmarkSwiftTests: XCTestCase {
         }
     }
     
+    //MARK: Trees
+    
+    func testTreeInsertSpeed() {
+        self.measureBlock() {
+            let tree = BinarySearchTree<Int, String>()
+            tree.insert(DataStorage(key: 4, value: "ololo"))
+            tree.traverse(TraverseType.InOrder, callback: { (storage) -> Void in
+                println("node: \(storage.key) \(storage.value)")
+            })
+        }
+    }
+    
     //MARK: Helper methods
 
     func generateArray() -> [String] {

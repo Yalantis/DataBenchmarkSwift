@@ -12,6 +12,10 @@ enum TraverseType {
     case PreOrder, InOrder, PostOrder
 }
 
+enum BinaryNodeType {
+    case Left, Right, Root
+}
+
 class Node<T> {
     var storedValue: T
     
@@ -32,6 +36,8 @@ class LinkedNode<T>: Node<T> {
         self.next = node
     }
 }
+
+//MARK: Tree
 
 struct DataStorage<T: Comparable, U>: Comparable {
     var key: T
@@ -61,9 +67,20 @@ func < <T: Comparable, U>(lhs: DataStorage<T, U>, rhs: DataStorage<T, U>) -> Boo
 
 class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
     
-    private var parent: BinaryTreeNode<K, V>?
+    private weak var parent: BinaryTreeNode<K, V>?
     private var left: BinaryTreeNode<K, V>?
     private var right: BinaryTreeNode<K, V>?
+    
+    private var type: BinaryNodeType {
+        if (self.parent == nil) {
+            return .Root
+        }
+        if let leftParentChild = self.parent!.left {
+            return leftParentChild === self ? .Left : BinaryNodeType.Right
+        } else {
+            return .Right
+        }
+    }
     
     override init(value: DataStorage<K, V>) {
         super.init(value: value)
@@ -135,6 +152,44 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
             self.left?.traverse(type, callback: callback)
             self.right?.traverse(type, callback: callback)
             callback(storage: self.storedValue)
+        }
+    }
+    
+    func rotateRight() {
+        switch(self.type) {
+        case .Root:
+            println("cannot rotate root")
+        case .Left:
+            self.right?.moveNode(toNode: self.parent!, asLeftChild: true)
+            self.parent?.moveNode(toNode: self, asLeftChild: false)
+        case .Right:
+            println("Right rotation for right branch ins't implemented")
+        }
+    }
+    
+    func rotateLeft() {
+        switch(self.type) {
+        case .Root:
+            println("cannot rotate root")
+        case .Left:
+             println("Left rotation for left branch ins't implemented")
+        case .Right:
+            self.left?.moveNode(toNode: self.parent!, asLeftChild: false)
+            self.parent?.moveNode(toNode: self, asLeftChild: true)
+        }
+    }
+    
+    func moveNode(toNode owner: BinaryTreeNode<K, V>, asLeftChild left: Bool) {
+        self.parent = owner
+        if (self.type == .Left) {
+           self.parent!.left = nil
+        } else if (self.type == .Right) {
+            self.parent!.right = nil
+        }
+        if (left) {
+            owner.left = self
+        } else {
+            owner.right = self
         }
     }
     
