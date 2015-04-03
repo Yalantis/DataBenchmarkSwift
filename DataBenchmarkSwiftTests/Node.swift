@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum TraverseType {
+    case PreOrder, InOrder, PostOrder
+}
+
 class Node<T> {
     var storedValue: T
     
@@ -26,10 +30,8 @@ class LinkedNode<T>: Node<T> {
     init(value: T, nextLinkedNode node: LinkedNode) {
         super.init(value: value)
         self.next = node
-        
     }
 }
-
 
 struct DataStorage<T: Comparable, U>: Comparable {
     var key: T
@@ -67,45 +69,81 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
         super.init(value: value)
     }
     
-    func insert(value: DataStorage<K, V>) {
-        if (value.key == self.storedValue.key) {
-            return
-        }
-        
-        if (value < self.storedValue) {
-            if (self.left == nil) {
-                self.left = BinaryTreeNode(value: value)
-            } else {
-                self.left!.insert(value)
-            }
-        } else {
-            if (self.right == nil) {
-                self.right = BinaryTreeNode(value: value)
-            } else {
-                self.right!.insert(value)
-            }
-        }
-    }
-    
-    func find(storage: DataStorage<K, V>) -> V? {
+    func insert(storage: DataStorage<K, V>) {
         if (storage == self.storedValue) {
-            return storedValue.value
+            return
         }
         
         if (storage < self.storedValue) {
             if (self.left == nil) {
-                return nil
+                self.left = BinaryTreeNode(value: storage)
             } else {
-                return self.left!.find(storage)
+                self.left!.insert(storage)
             }
         } else {
             if (self.right == nil) {
-                return nil
+                self.right = BinaryTreeNode(value: storage)
             } else {
-                return self.right!.find(storage)
+                self.right!.insert(storage)
             }
         }
+    }
+    
+    func find(key: K) -> V? {
+        if (key == self.storedValue.key) {
+            return storedValue.value
+        }
         
+        if (key < self.storedValue.key && self.left != nil) {
+            return self.left!.find(key)
+        } else if (key > self.storedValue.key && self.right != nil) {
+            return self.right!.find(key)
+        }
+        return nil
+    }
+    
+    func remove(key: K) {
+        if (key == self.storedValue.key) {
+            switch(self.left, self.right) {
+            case let(.None, .None):
+                self.parent = nil
+            case let(.Some(left), .None):
+                self.storedValue = left.storedValue
+                self.left = nil
+            case let(.None, .Some(right)):
+                self.storedValue = right.storedValue
+                self.right = nil
+            case let(.Some(left), .Some(right)):
+                let successor = right.findMinNode()
+                self.storedValue = successor.storedValue
+                successor.remove(successor.storedValue.key)
+            }
+        }
+    }
+    
+    func traverse(type: TraverseType, callback: (storage: DataStorage<K, V>) -> Void) {
+        switch (type) {
+        case .InOrder:
+            self.left?.traverse(type, callback: callback)
+            callback(storage: self.storedValue)
+            self.right?.traverse(type, callback: callback)
+        case .PreOrder:
+            callback(storage: self.storedValue)
+            self.left?.traverse(type, callback: callback)
+            self.right?.traverse(type, callback: callback)
+        case .PostOrder:
+            self.left?.traverse(type, callback: callback)
+            self.right?.traverse(type, callback: callback)
+            callback(storage: self.storedValue)
+        }
+    }
+    
+    private func findMinNode() -> BinaryTreeNode<K, V> {
+        if (self.left == nil) {
+            return self
+        } else {
+            return self.left!.findMinNode()
+        }
     }
     
 }
