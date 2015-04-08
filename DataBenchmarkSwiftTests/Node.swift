@@ -154,6 +154,17 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
         }
     }
     
+    private func findMinNode() -> BinaryTreeNode<K, V> {
+        if (self.left == nil) {
+            return self
+        } else {
+            return self.left!.findMinNode()
+        }
+    }
+}
+
+extension BinaryTreeNode {
+    
     func rotateRight() {
         switch(self.type) {
         case .Root:
@@ -171,7 +182,7 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
         case .Root:
             println("cannot rotate root")
         case .Left:
-             println("Left rotation for left branch ins't implemented")
+            println("Left rotation for left branch ins't implemented")
         case .Right:
             self.left?.moveNode(toNode: self.parent!, asLeftChild: false)
             self.parent?.moveNode(toNode: self, asLeftChild: true)
@@ -181,7 +192,7 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
     func moveNode(toNode owner: BinaryTreeNode<K, V>, asLeftChild left: Bool) {
         self.parent = owner
         if (self.type == .Left) {
-           self.parent!.left = nil
+            self.parent!.left = nil
         } else if (self.type == .Right) {
             self.parent!.right = nil
         }
@@ -189,14 +200,6 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
             owner.left = self
         } else {
             owner.right = self
-        }
-    }
-    
-    private func findMinNode() -> BinaryTreeNode<K, V> {
-        if (self.left == nil) {
-            return self
-        } else {
-            return self.left!.findMinNode()
         }
     }
     
