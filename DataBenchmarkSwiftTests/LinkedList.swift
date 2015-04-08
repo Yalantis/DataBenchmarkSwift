@@ -18,14 +18,14 @@ class LinkedList<T: Equatable>: SequenceType {
     init(value: T) {
         self.startNode = LinkedNode(value: value)
     }
-    
+
     func generate() -> LinkedListGenerator<T> {
         return LinkedListGenerator(list: self)
     }
 }
 
 class OptimizedLinkedList<T: Equatable>: LinkedList<T> {
-    private var lastNode: LinkedNode<T>?
+    private weak var lastNode: LinkedNode<T>?
     
     override init() {
        super.init()

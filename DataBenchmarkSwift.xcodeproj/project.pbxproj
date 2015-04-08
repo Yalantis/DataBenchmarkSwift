@@ -11,6 +11,8 @@
 		85C629121ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */; };
 		85C629241ACC22B100AC923F /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629231ACC22B100AC923F /* Node.swift */; };
 		85C629261ACC241C00AC923F /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629251ACC241C00AC923F /* LinkedList.swift */; };
+		85D9303C1AD541CC00106194 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D9303B1AD541CC00106194 /* Random.swift */; };
+		85D9303E1AD5576200106194 /* PerformanceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D9303D1AD5576200106194 /* PerformanceTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBenchmarkSwiftTests.swift; sourceTree = "<group>"; };
 		85C629231ACC22B100AC923F /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		85C629251ACC241C00AC923F /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		85D9303B1AD541CC00106194 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		85D9303D1AD5576200106194 /* PerformanceTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +58,11 @@
 			children = (
 				85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */,
 				85C6290F1ACBFB3800AC923F /* Supporting Files */,
-				85C629231ACC22B100AC923F /* Node.swift */,
 				856250C21ACE8E04007F357E /* BinaryTree.swift */,
+				85C629231ACC22B100AC923F /* Node.swift */,
 				85C629251ACC241C00AC923F /* LinkedList.swift */,
+				85D9303B1AD541CC00106194 /* Random.swift */,
+				85D9303D1AD5576200106194 /* PerformanceTestCase.swift */,
 			);
 			path = DataBenchmarkSwiftTests;
 			sourceTree = "<group>";
@@ -139,7 +145,9 @@
 			files = (
 				856250C31ACE8E04007F357E /* BinaryTree.swift in Sources */,
 				85C629261ACC241C00AC923F /* LinkedList.swift in Sources */,
+				85D9303C1AD541CC00106194 /* Random.swift in Sources */,
 				85C629121ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift in Sources */,
+				85D9303E1AD5576200106194 /* PerformanceTestCase.swift in Sources */,
 				85C629241ACC22B100AC923F /* Node.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

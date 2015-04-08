@@ -12,7 +12,7 @@ import XCTest
 private let iterationCount = 100000
 private let testString = "test"
 
-class DataBenchmarkSwiftTests: XCTestCase {
+class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     override func setUp() {
         super.setUp()
@@ -26,152 +26,176 @@ class DataBenchmarkSwiftTests: XCTestCase {
     
     //MARK: Arrays
     
-    func testArrayWriteSpeed() {
-        self.measureBlock() {
-           self.generateArray()
+    func testArrayAdd() {
+        performFunctionInBackground() {
+            self.generateArray()
         }
     }
     
-    func testArrayFastEnumReadSpeed() {
+    func testArrayUpdate() {
+        var testArray = self.generateArray()
+        performFunctionInBackground() {
+            for i in 0..<testArray.count {
+                let randomInt = Random.rndInt(0, to: iterationCount)
+                testArray[i] = testString + String(randomInt)
+            }
+        }
+    }
+    
+    func testArrayFastEnumRead() {
         var testArray = self.generateArray()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for str in testArray {
                 let constant = str
             }
         }
     }
     
-    func testArrayByIndexReadSpeed() {
-            var testArray = self.generateArray()
+    func testArrayByIndexRead() {
+        var testArray = self.generateArray()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for var i = 0; i < testArray.count; i++ {
                 let constant = testArray[i]
             }
         }
     }
     
-    func testArrayByIndexDeleteSpeed() {
+    func testArrayByIndexDelete() {
         var testArray = self.generateArray()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for var i = 0; i < testArray.count; i++ {
-               testArray.removeAtIndex(i)
+                testArray.removeAtIndex(i)
             }
         }
     }
     
-    func testArrayIndexOfSpeed() {
+    func testArrayFindByIndex() {
         var testArray = self.generateArray()
         let last = testArray.last!
-        self.measureBlock() {
+        performFunctionInBackground() {
             find(testArray, last)
         }
     }
     
-    func testArrayContainSpeed() {
+    func testArrayCheckContain() {
         var testArray = self.generateArray()
         let last = testArray.last!
-        self.measureBlock() {
+        performFunctionInBackground() {
             contains(testArray, last)
         }
     }
     
     //MARK: Sets
     
-    func testSetWriteSpeed() {
-        self.measureBlock() {
-           self.generateSet()
+    func testSetAdd() {
+        performFunctionInBackground() {
+            self.generateSet()
         }
     }
     
-    func testSetFastEnumReadSpeed() {
+    func testSetFastEnumRead() {
         var testSet = self.generateSet()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for str in testSet {
                 let constant = str
             }
         }
     }
     
-    func testSetFastEnumDeleteSpeed() {
+    func testSetDelete() {
         var testSet = self.generateSet()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for item in testSet {
                 testSet.remove(item)
             }
         }
     }
     
-    func testSetContainsSpeed() {
+    func testSetCheckContain() {
         var testSet = self.generateSet()
         let toFound = testString + String(iterationCount - 1)
-        self.measureBlock() {
+        performFunctionInBackground() {
             testSet.contains(toFound)
         }
     }
     
     //MARK: Dictionaries
     
-    func testDictionaryWriteSpeed() {
-        self.measureBlock() {
+    func testDictionaryAdd() {
+        performFunctionInBackground() {
             self.generateDictionary()
         }
     }
     
-    func testDictionaryFastEnumReadSpeed() {
+    func testDictionaryUpdate() {
+        var testDictionary = self.generateDictionary()
+        var randomDictionary = Dictionary<String, String>()
+        for i in 0..<iterationCount {
+            randomDictionary[String(i)] = testString + String(Random.rndInt(0, to: iterationCount))
+        }
+        performFunctionInBackground() {
+            for key in testDictionary.keys {
+                testDictionary[key] = randomDictionary[key]
+            }
+        }
+    }
+    
+    func testDictionaryReadFastEnum() {
         var testDictionary = self.generateDictionary()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for value in testDictionary.values.array {
                 let constant = value
             }
         }
     }
     
-    func testDictionaryByKeyReadSpeed() {
+    func testDictionaryReadByKey() {
         var testDictionary = self.generateDictionary()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for var i = 0; i < iterationCount; i++ {
                 let constant = testDictionary[String(i)]
             }
         }
     }
     
-    func testDictionaryByKeyDeleteSpeed() {
+    func testDictionaryDeleteByKey() {
         var testDictionary = self.generateDictionary()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for var i = 0; i < iterationCount; i++ {
                 testDictionary.removeValueForKey(String(i))
             }
         }
     }
     
-    func testDictionaryContainsSpeed() {
+    func testDictionaryCheckContain() {
         var testDictionary = self.generateDictionary()
         let toFound = testString + String(iterationCount - 1)
-        self.measureBlock() {
+        performFunctionInBackground() {
             contains(testDictionary.values, toFound)
         }
     }
     
     //Linked lists
     
+  /* TODO Linked list crashes while dealloc if number of iterations is bigger than 10000
     func testLinkedListWriteSpeed() {
-        self.measureBlock() {
+        performFunctionInBackground() {
             self.generateLinkedList()
         }
-    }
+    }*/
     
     func testLinkedListFastEnumReadSpeed() {
         var testLinkedList = self.generateLinkedList()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for str in testLinkedList {
                 let constant = str
             }
@@ -181,7 +205,7 @@ class DataBenchmarkSwiftTests: XCTestCase {
     func testLinkedListFastEnumDeleteSpeed() {
         var testLinkedList = self.generateLinkedList()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for item in testLinkedList {
                 testLinkedList.removeFirstOccurenceOf(item)
             }
@@ -189,17 +213,21 @@ class DataBenchmarkSwiftTests: XCTestCase {
     }
     
     //MARK: Stacks
-    
+      /* TODO Linked list crashes while dealloc if number of iterations is bigger than 10000
     func testStackWriteSpeed() {
-        self.measureBlock() {
-            self.generateStack()
+        var testStack = Stack<String>()
+        performFunctionInBackground() {
+            [unowned testStack] in
+            for var i = 0; i < iterationCount; i++ {
+                testStack.push(testString + String(i))
+            }
         }
-    }
+    } */
     
     func testStackReadSpeed() {
         let testStack = self.generateStack()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for _ in 0..<iterationCount {
                 let constant = testStack.pop()
             }
@@ -207,37 +235,25 @@ class DataBenchmarkSwiftTests: XCTestCase {
     }
     
     //MARK: Queues
-    
+    /* TODO Linked list crashes while dealloc if number of iterations is bigger than 10000
     func testQueueWriteSpeed() {
-        self.measureBlock() {
+        performFunctionInBackground() {
             self.generateQueue()
         }
-    }
+    }*/
     
     func testQueueReadSpeed() {
         let testQueue = self.generateQueue()
         
-        self.measureBlock() {
+        performFunctionInBackground() {
             for _ in 0..<iterationCount {
                 let constant = testQueue.dequeue()
             }
         }
     }
     
-    //MARK: Trees
-    
-    func testTreeInsertSpeed() {
-        self.measureBlock() {
-            let tree = BinarySearchTree<Int, String>()
-            tree.insert(DataStorage(key: 4, value: "ololo"))
-            tree.traverse(TraverseType.InOrder, callback: { (storage) -> Void in
-                println("node: \(storage.key) \(storage.value)")
-            })
-        }
-    }
-    
     //MARK: Helper methods
-
+    
     func generateArray() -> [String] {
         var testArray = [String]()
         for var i = 0; i < iterationCount; i++ {
@@ -291,7 +307,7 @@ class DataBenchmarkSwiftTests: XCTestCase {
         
         return testQueue
     }
-
-
+    
+    
     
 }
