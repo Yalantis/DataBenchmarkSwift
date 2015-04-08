@@ -42,11 +42,6 @@ class LinkedNode<T>: Node<T> {
 struct DataStorage<T: Comparable, U>: Comparable {
     var key: T
     var value: U
-    
-    init (key: T, value: U) {
-        self.key = key
-        self.value = value
-    }
 }
 
 func == <T: Equatable, U> (lhs: DataStorage<T, U>, rhs: DataStorage<T, U>) -> Bool {
@@ -120,7 +115,11 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
     }
     
     func remove(key: K) {
-        if (key == self.storedValue.key) {
+        if (key < self.storedValue.key) {
+            self.left?.remove(key)
+        } else if (key > self.storedValue.key) {
+            self.right?.remove(key)
+        } else {
             switch(self.left, self.right) {
             case let(.None, .None):
                 self.parent = nil
