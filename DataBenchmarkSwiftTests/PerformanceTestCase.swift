@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+let testString = "test"
+
 class PerformanceTestCase : XCTestCase {
     /*
     This function simulates the performance of the iOS app by making
@@ -33,7 +35,6 @@ class PerformanceTestCase : XCTestCase {
         //Set a comically long wait time, since some of these take a while,
         //especially with optimization off.
         waitForExpectationsWithTimeout(100000000.0 as NSTimeInterval, handler: { (NSError) -> Void in
-             println("finish tests")
      })
     }
 }
