@@ -11,6 +11,7 @@
 		85C629121ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */; };
 		85C629241ACC22B100AC923F /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629231ACC22B100AC923F /* Node.swift */; };
 		85C629261ACC241C00AC923F /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629251ACC241C00AC923F /* LinkedList.swift */; };
+		85D212BA1ADD329400B29DBB /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D212B91ADD329400B29DBB /* CHCSVParser.m */; };
 		85D9303C1AD541CC00106194 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D9303B1AD541CC00106194 /* Random.swift */; };
 		85D9303E1AD5576200106194 /* PerformanceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D9303D1AD5576200106194 /* PerformanceTestCase.swift */; };
 		92F5D5B01AD73261002B426B /* ComplexDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */; };
@@ -38,6 +39,9 @@
 		85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBenchmarkSwiftTests.swift; sourceTree = "<group>"; };
 		85C629231ACC22B100AC923F /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		85C629251ACC241C00AC923F /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		85D212B71ADD329300B29DBB /* DataBenchmarkSwiftTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "DataBenchmarkSwiftTests-Bridging-Header.h"; path = "DataBenchmarkSwiftTests/DataBenchmarkSwiftTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		85D212B81ADD329400B29DBB /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
+		85D212B91ADD329400B29DBB /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		85D9303B1AD541CC00106194 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		85D9303D1AD5576200106194 /* PerformanceTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTestCase.swift; sourceTree = "<group>"; };
 		92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexDataTests.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 		85C628ED1ACBFB3800AC923F = {
 			isa = PBXGroup;
 			children = (
+				85D212B71ADD329300B29DBB /* DataBenchmarkSwiftTests-Bridging-Header.h */,
 				85C6290E1ACBFB3800AC923F /* DataBenchmarkSwiftTests */,
 				92F5D5B61AD73358002B426B /* testTarget */,
 				85C628F71ACBFB3800AC923F /* Products */,
@@ -89,6 +94,7 @@
 		85C6290E1ACBFB3800AC923F /* DataBenchmarkSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				85D212B61ADD327C00B29DBB /* Libraries */,
 				85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */,
 				85C6290F1ACBFB3800AC923F /* Supporting Files */,
 				856250C21ACE8E04007F357E /* BinaryTree.swift */,
@@ -107,6 +113,15 @@
 				85C629101ACBFB3800AC923F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		85D212B61ADD327C00B29DBB /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				85D212B81ADD329400B29DBB /* CHCSVParser.h */,
+				85D212B91ADD329400B29DBB /* CHCSVParser.m */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		92F5D5B61AD73358002B426B /* testTarget */ = {
@@ -234,6 +249,7 @@
 				92F5D5B01AD73261002B426B /* ComplexDataTests.swift in Sources */,
 				85C629261ACC241C00AC923F /* LinkedList.swift in Sources */,
 				85D9303C1AD541CC00106194 /* Random.swift in Sources */,
+				85D212BA1ADD329400B29DBB /* CHCSVParser.m in Sources */,
 				85C629121ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift in Sources */,
 				85D9303E1AD5576200106194 /* PerformanceTestCase.swift in Sources */,
 				85C629241ACC22B100AC923F /* Node.swift in Sources */,
@@ -366,6 +382,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -377,6 +394,8 @@
 				INFOPLIST_FILE = DataBenchmarkSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DataBenchmarkSwiftTests/DataBenchmarkSwiftTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testTarget.app/testTarget";
 			};
 			name = Debug;
@@ -385,6 +404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -392,6 +412,7 @@
 				INFOPLIST_FILE = DataBenchmarkSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DataBenchmarkSwiftTests/DataBenchmarkSwiftTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testTarget.app/testTarget";
 			};
 			name = Release;
@@ -448,6 +469,7 @@
 				92F5D5D31AD73358002B426B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

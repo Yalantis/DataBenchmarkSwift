@@ -8,10 +8,14 @@
 
 import Foundation
 import XCTest
+import QuartzCore
 
 let testString = "test"
+let attemptsCount = 10
+let maxElementsInStructure = 100
 
 class PerformanceTestCase : XCTestCase {
+    
     /*
     This function simulates the performance of the iOS app by making
     sure the test runs on a background thread with identical priority.
@@ -36,5 +40,35 @@ class PerformanceTestCase : XCTestCase {
         //especially with optimization off.
         waitForExpectationsWithTimeout(100000000.0 as NSTimeInterval, handler: { (NSError) -> Void in
      })
+    }
+    
+    func performTimeTest<T>(prepareBlock: (Int) -> T, operationBlock: (T) -> (), structureName: String, operationName: String) {
+        var attemptsWithSumTime = [NSTimeInterval](count: maxElementsInStructure, repeatedValue: 0)
+
+        for attempt in 0..<attemptsCount {
+            for elementCount in 0..<maxElementsInStructure {
+                var structure = prepareBlock(elementCount)
+                let time = measureExecutionTime(codeToEstimate: operationBlock, structure: structure)
+                attemptsWithSumTime[elementCount] = attemptsWithSumTime[elementCount] + time
+            }
+        }
+        
+        //write to csv
+        let path = NSHomeDirectory().stringByAppendingPathComponent(structureName + "-" + operationName + ".csv")
+        let writer = CHCSVWriter(forWritingToCSVFile: path)
+        for elementCount in 0..<maxElementsInStructure {
+            let average = attemptsWithSumTime[elementCount] / NSTimeInterval(attemptsCount)
+            writer.writeField(average)
+            writer.writeField(elementCount)
+            writer.finishLine()
+        }
+        writer.closeStream()
+    }
+    
+    private func measureExecutionTime<T>(codeToEstimate code: (T) -> (), structure: T) -> NSTimeInterval {
+        let startTime = CACurrentMediaTime()
+        code(structure)
+        let finishTime = CACurrentMediaTime()
+        return finishTime - startTime
     }
 }

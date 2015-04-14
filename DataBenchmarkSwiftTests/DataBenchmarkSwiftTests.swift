@@ -27,9 +27,10 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     //MARK: Arrays
     
     func testArrayAdd() {
-        performFunctionInBackground() {
-            self.generateArray()
-        }
+        self.performTimeTest(self.generateArray, operationBlock: { (array: [String]) -> () in
+            var mutableArray = array
+            mutableArray.append(testString + String(Random.rndInt(0, to: iterationCount)))
+        }, structureName: "Array", operationName: "Add")
     }
     
     func testArrayUpdate() {
@@ -188,6 +189,15 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     func generateArray() -> [String] {
         var testArray = [String]()
         for var i = 0; i < iterationCount; i++ {
+            testArray.append(testString + String(i))
+        }
+        
+        return testArray
+    }
+    
+    func generateArray(elementCount: Int) -> [String] {
+        var testArray = [String]()
+        for var i = 0; i < elementCount; i++ {
             testArray.append(testString + String(i))
         }
         
