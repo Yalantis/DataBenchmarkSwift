@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-private let iterationCount = 10000
+private let iterationCount = 1
 
 class ComplexDataTests: PerformanceTestCase {
     

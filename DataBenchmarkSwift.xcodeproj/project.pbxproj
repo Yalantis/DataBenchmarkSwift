@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		856250C31ACE8E04007F357E /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856250C21ACE8E04007F357E /* BinaryTree.swift */; };
+		856961DA1ADE89E300E810BD /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856961D91ADE89E300E810BD /* Helpers.swift */; };
 		85C629121ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */; };
 		85C629241ACC22B100AC923F /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629231ACC22B100AC923F /* Node.swift */; };
 		85C629261ACC241C00AC923F /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C629251ACC241C00AC923F /* LinkedList.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		856250C21ACE8E04007F357E /* BinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryTree.swift; sourceTree = "<group>"; };
+		856961D91ADE89E300E810BD /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		85C6290B1ACBFB3800AC923F /* DataBenchmarkSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataBenchmarkSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85C629101ACBFB3800AC923F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBenchmarkSwiftTests.swift; sourceTree = "<group>"; };
@@ -72,6 +74,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		856961D81ADE741000E810BD /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */,
+				85D9303D1AD5576200106194 /* PerformanceTestCase.swift */,
+				92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */,
+				856961D91ADE89E300E810BD /* Helpers.swift */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
 		85C628ED1ACBFB3800AC923F = {
 			isa = PBXGroup;
 			children = (
@@ -94,15 +107,13 @@
 		85C6290E1ACBFB3800AC923F /* DataBenchmarkSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				856961D81ADE741000E810BD /* Tests */,
 				85D212B61ADD327C00B29DBB /* Libraries */,
-				85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */,
 				85C6290F1ACBFB3800AC923F /* Supporting Files */,
 				856250C21ACE8E04007F357E /* BinaryTree.swift */,
 				85C629231ACC22B100AC923F /* Node.swift */,
 				85C629251ACC241C00AC923F /* LinkedList.swift */,
 				85D9303B1AD541CC00106194 /* Random.swift */,
-				85D9303D1AD5576200106194 /* PerformanceTestCase.swift */,
-				92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */,
 			);
 			path = DataBenchmarkSwiftTests;
 			sourceTree = "<group>";
@@ -249,6 +260,7 @@
 				92F5D5B01AD73261002B426B /* ComplexDataTests.swift in Sources */,
 				85C629261ACC241C00AC923F /* LinkedList.swift in Sources */,
 				85D9303C1AD541CC00106194 /* Random.swift in Sources */,
+				856961DA1ADE89E300E810BD /* Helpers.swift in Sources */,
 				85D212BA1ADD329400B29DBB /* CHCSVParser.m in Sources */,
 				85C629121ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift in Sources */,
 				85D9303E1AD5576200106194 /* PerformanceTestCase.swift in Sources */,
