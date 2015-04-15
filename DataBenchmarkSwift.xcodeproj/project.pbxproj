@@ -15,7 +15,6 @@
 		85D212BA1ADD329400B29DBB /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D212B91ADD329400B29DBB /* CHCSVParser.m */; };
 		85D9303C1AD541CC00106194 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D9303B1AD541CC00106194 /* Random.swift */; };
 		85D9303E1AD5576200106194 /* PerformanceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D9303D1AD5576200106194 /* PerformanceTestCase.swift */; };
-		92F5D5B01AD73261002B426B /* ComplexDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */; };
 		92F5D5BA1AD73358002B426B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5D5B91AD73358002B426B /* AppDelegate.swift */; };
 		92F5D5BC1AD73358002B426B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5D5BB1AD73358002B426B /* ViewController.swift */; };
 		92F5D5BF1AD73358002B426B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92F5D5BD1AD73358002B426B /* Main.storyboard */; };
@@ -46,7 +45,6 @@
 		85D212B91ADD329400B29DBB /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		85D9303B1AD541CC00106194 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		85D9303D1AD5576200106194 /* PerformanceTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTestCase.swift; sourceTree = "<group>"; };
-		92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexDataTests.swift; sourceTree = "<group>"; };
 		92F5D5B51AD73358002B426B /* testTarget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testTarget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92F5D5B81AD73358002B426B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92F5D5B91AD73358002B426B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 			children = (
 				85C629111ACBFB3800AC923F /* DataBenchmarkSwiftTests.swift */,
 				85D9303D1AD5576200106194 /* PerformanceTestCase.swift */,
-				92F5D5AF1AD73261002B426B /* ComplexDataTests.swift */,
 				856961D91ADE89E300E810BD /* Helpers.swift */,
 			);
 			name = Tests;
@@ -257,7 +254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				856250C31ACE8E04007F357E /* BinaryTree.swift in Sources */,
-				92F5D5B01AD73261002B426B /* ComplexDataTests.swift in Sources */,
 				85C629261ACC241C00AC923F /* LinkedList.swift in Sources */,
 				85D9303C1AD541CC00106194 /* Random.swift in Sources */,
 				856961DA1ADE89E300E810BD /* Helpers.swift in Sources */,
