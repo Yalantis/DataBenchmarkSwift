@@ -9,8 +9,7 @@
 import UIKit
 import XCTest
 
-private let iterationCount = 100000
-
+private let maxRandomNumber = 100000
 
 class DataBenchmarkSwiftTests: PerformanceTestCase {
     
@@ -27,128 +26,134 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     //MARK: Arrays
     
     func testArrayAdd() {
-        self.performTimeTest(ArrayHelper.generateArray, operationBlock: { (var array: [String]) -> () in
-            array.append(testString + String(Random.rndInt(0, to: iterationCount)))
-            }, structureName: "Array", operationName: "Add")
+        self.performTimeTest(ArrayHelper.generateArray,
+            operationBlock: {(var array: [String]) -> () in
+                array.append(testString + String(Random.rndInt(0, to: maxRandomNumber)))
+            },
+            structureName: "Array", operationName: "Add")
     }
     
     func testArrayUpdate() {
-        self.performTimeTest(ArrayHelper.generateArray, operationBlock: {
-            (var array: [String], randomIndex: Int?, randomElement: String?) -> () in
-            if (array.count == 0) {
-                return
-            }
-            array[randomIndex!] = testString + String(Random.rndInt(0, to: iterationCount))
-            }, randomIndexBlock: ArrayHelper.randomArrayIndex, randomElementBlock: ArrayHelper.randomArrayElement, structureName: "Array", operationName: "UpdateRandom")
+        self.performTimeTest(ArrayHelper.generateArray,
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+                array[randomIndex!] = testString + String(Random.rndInt(0, to: maxRandomNumber))
+            },
+            randomIndexBlock: ArrayHelper.randomArrayIndex,
+            randomElementBlock: ArrayHelper.randomArrayElement,
+            structureName: "Array", operationName: "UpdateRandom")
     }
     
     func testArrayByIndexRead() {
-        self.performTimeTest(ArrayHelper.generateArray, operationBlock: {
-            (var array: [String], randomIndex: Int?, randomElement: String?) -> () in
-            if (array.count == 0) {
-                return
-            }
-            let constant = array[randomIndex!]
-            }, randomIndexBlock: ArrayHelper.randomArrayIndex, randomElementBlock: ArrayHelper.randomArrayElement, structureName: "Array", operationName: "ReadRandom")
+        self.performTimeTest(ArrayHelper.generateArray,
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+                let constant = array[randomIndex!]
+            },
+            randomIndexBlock: ArrayHelper.randomArrayIndex,
+            randomElementBlock: ArrayHelper.randomArrayElement,
+            structureName: "Array", operationName: "ReadRandom")
     }
     
     func testArrayByIndexDelete() {
-        self.performTimeTest(ArrayHelper.generateArray, operationBlock: {
-            (var array: [String], randomIndex: Int?, randomElement: String?) -> () in
-            if (array.count == 0) {
-                return
-            }
-            array.removeAtIndex(randomIndex!)
-            }, randomIndexBlock: ArrayHelper.randomArrayIndex, randomElementBlock: ArrayHelper.randomArrayElement, structureName: "Array", operationName: "DeleteRandom")
+        self.performTimeTest(ArrayHelper.generateArray,
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+                array.removeAtIndex(randomIndex!)
+            },
+            randomIndexBlock: ArrayHelper.randomArrayIndex,
+            randomElementBlock: ArrayHelper.randomArrayElement,
+            structureName: "Array", operationName: "DeleteRandom")
         
     }
     
     func testArrayContains() {
-        self.performTimeTest(ArrayHelper.generateArray, operationBlock: {
-            (var array: [String], randomIndex: Int?, randomElement: String?) -> () in
-            if (array.count == 0) {
-                return
-            }
-            let constant = contains(array, randomElement!)
-            }, randomIndexBlock: ArrayHelper.randomArrayIndex, randomElementBlock: ArrayHelper.randomArrayElement, structureName: "Array", operationName: "ContainsRandom")
+        self.performTimeTest(ArrayHelper.generateArray,
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+                let constant = contains(array, randomElement!)
+            },
+            randomIndexBlock: ArrayHelper.randomArrayIndex,
+            randomElementBlock: ArrayHelper.randomArrayElement,
+            structureName: "Array", operationName: "ContainsRandom")
         
     }
     
     //MARK: Sets
     
     func testSetAdd() {
-        self.performTimeTest(SetHelper.generateSet, operationBlock: { (var set: Set<String>) -> () in
-            set.insert(testString + String(Random.rndInt(0, to: iterationCount)))
-            }, structureName: "Set", operationName: "Add")
+        self.performTimeTest(SetHelper.generateSet,
+            operationBlock: { (var set: Set<String>) -> () in
+                set.insert(testString + String(Random.rndInt(0, to: maxRandomNumber)))
+            },
+            structureName: "Set", operationName: "Add")
     }
     
     func testSetDelete() {
-        self.performTimeTest(SetHelper.generateSet, operationBlock: {
-            (var set: Set<String>, randomIndex: Int?, randomElement: String?) -> () in
-            if (set.count == 0) {
-                return
-            }
-            set.remove(randomElement!)
-            }, randomIndexBlock: SetHelper.randomSetIndex, randomElementBlock: SetHelper.randomSetElement, structureName: "Set", operationName: "DeleteRandom")
+        self.performTimeTest(SetHelper.generateSet,
+            operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> () in
+                set.remove(randomElement!)
+            },
+            randomIndexBlock: SetHelper.randomSetIndex,
+            randomElementBlock: SetHelper.randomSetElement,
+            structureName: "Set", operationName: "DeleteRandom")
     }
     
     func testSetCheckContain() {
-        self.performTimeTest(SetHelper.generateSet, operationBlock: {
-            (var set: Set<String>, randomIndex: Int?, randomElement: String?) -> () in
-            if (set.count == 0) {
-                return
-            }
-            let constant = contains(set, randomElement!)
-            }, randomIndexBlock: SetHelper.randomSetIndex, randomElementBlock: SetHelper.randomSetElement, structureName: "Set", operationName: "ContainsRandom")
+        self.performTimeTest(SetHelper.generateSet,
+            operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> () in
+                let constant = contains(set, randomElement!)
+            },
+            randomIndexBlock: SetHelper.randomSetIndex,
+            randomElementBlock: SetHelper.randomSetElement,
+            structureName: "Set", operationName: "ContainsRandom")
     }
     
     //MARK: Dictionaries
     
     func testDictionaryAdd() {
-        self.performTimeTest(DictionaryHelper.generateDictionary, operationBlock: { (var dict: [String: String]) -> () in
-            let uniqueKey = testString + String(dict.count)
-            dict[uniqueKey] = (testString + String(Random.rndInt(0, to: iterationCount)))
-            }, structureName: "Dictionary", operationName: "Add")
+        self.performTimeTest(DictionaryHelper.generateDictionary,
+            operationBlock: { (var dict: [String: String]) -> () in
+                let uniqueKey = testString + String(dict.count)
+                dict[uniqueKey] = (testString + String(Random.rndInt(0, to: maxRandomNumber)))
+            },
+            structureName: "Dictionary", operationName: "Add")
     }
     
     func testDictionaryUpdate() {
-        self.performTimeTest(DictionaryHelper.generateDictionary, operationBlock: {
-            (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
-            if (dictionary.count == 0) {
-                return
-            }
-            dictionary[randomIndex!] = (testString + String(Random.rndInt(0, to: iterationCount)))
-            }, randomIndexBlock: DictionaryHelper.randomDictionaryIndex, randomElementBlock: DictionaryHelper.randomDictionaryElement, structureName: "Dictionary", operationName: "UpdateRandom")
+        self.performTimeTest(DictionaryHelper.generateDictionary,
+            operationBlock: { (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+                dictionary[randomIndex!] = (testString + String(Random.rndInt(0, to: maxRandomNumber)))
+            },
+            randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
+            randomElementBlock: DictionaryHelper.randomDictionaryElement,
+            structureName: "Dictionary", operationName: "UpdateRandom")
     }
- 
+    
     func testDictionaryReadByKey() {
-        self.performTimeTest(DictionaryHelper.generateDictionary, operationBlock: {
-            (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
-            if (dictionary.count == 0) {
-                return
-            }
-             let constant = dictionary[randomIndex!]
-            }, randomIndexBlock: DictionaryHelper.randomDictionaryIndex, randomElementBlock: DictionaryHelper.randomDictionaryElement, structureName: "Dictionary", operationName: "ReadRandom")
+        self.performTimeTest(DictionaryHelper.generateDictionary,
+            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+                let constant = dictionary[randomIndex!]
+            },
+            randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
+            randomElementBlock: DictionaryHelper.randomDictionaryElement,
+            structureName: "Dictionary", operationName: "ReadRandom")
     }
     
     func testDictionaryDeleteByKey() {
-        self.performTimeTest(DictionaryHelper.generateDictionary, operationBlock: {
-            (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
-            if (dictionary.count == 0) {
-                return
-            }
-            dictionary.removeValueForKey(randomIndex!)
-            }, randomIndexBlock: DictionaryHelper.randomDictionaryIndex, randomElementBlock: DictionaryHelper.randomDictionaryElement, structureName: "Dictionary", operationName: "DeleteRandom")
+        self.performTimeTest(DictionaryHelper.generateDictionary,
+            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+                dictionary.removeValueForKey(randomIndex!)
+            },
+            randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
+            randomElementBlock: DictionaryHelper.randomDictionaryElement,
+            structureName: "Dictionary", operationName: "DeleteRandom")
     }
     
     func testDictionaryCheckContain() {
-        self.performTimeTest(DictionaryHelper.generateDictionary, operationBlock: {
-            (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
-            if (dictionary.count == 0) {
-                return
-            }
-            contains(dictionary.values, randomElement!)
-            }, randomIndexBlock: DictionaryHelper.randomDictionaryIndex, randomElementBlock: DictionaryHelper.randomDictionaryElement, structureName: "Dictionary", operationName: "ContainsRandom")
+        self.performTimeTest(DictionaryHelper.generateDictionary,
+            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+                contains(dictionary.values, randomElement!)
+            },
+            randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
+            randomElementBlock: DictionaryHelper.randomDictionaryElement,
+            structureName: "Dictionary", operationName: "ContainsRandom")
     }
     
 }
