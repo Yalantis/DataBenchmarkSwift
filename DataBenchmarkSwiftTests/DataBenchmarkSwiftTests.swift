@@ -27,16 +27,22 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testArrayAdd() {
         self.performTimeTest(ArrayHelper.generateArray,
-            operationBlock: {(var array: [String]) -> () in
-                array.append(testString + String(Random.rndInt(0, to: maxRandomNumber)))
+            operationBlock: {(var array: [String]) -> NSTimeInterval in
+                 let start = CACurrentMediaTime()
+                array.append(self.randomString())
+                 let finish = CACurrentMediaTime()
+                return finish - start
             },
             structureName: "Array", operationName: "Add")
     }
     
     func testArrayUpdate() {
         self.performTimeTest(ArrayHelper.generateArray,
-            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
-                array[randomIndex!] = testString + String(Random.rndInt(0, to: maxRandomNumber))
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
+                 let start = CACurrentMediaTime()
+                array[randomIndex!] = self.randomString()
+                 let finish = CACurrentMediaTime()
+                 return finish - start
             },
             randomIndexBlock: ArrayHelper.randomArrayIndex,
             randomElementBlock: ArrayHelper.randomArrayElement,
@@ -45,8 +51,11 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testArrayByIndexRead() {
         self.performTimeTest(ArrayHelper.generateArray,
-            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 let constant = array[randomIndex!]
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: ArrayHelper.randomArrayIndex,
             randomElementBlock: ArrayHelper.randomArrayElement,
@@ -55,8 +64,11 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testArrayByIndexDelete() {
         self.performTimeTest(ArrayHelper.generateArray,
-            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 array.removeAtIndex(randomIndex!)
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: ArrayHelper.randomArrayIndex,
             randomElementBlock: ArrayHelper.randomArrayElement,
@@ -66,8 +78,11 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testArrayContains() {
         self.performTimeTest(ArrayHelper.generateArray,
-            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> () in
+            operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 let constant = contains(array, randomElement!)
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: ArrayHelper.randomArrayIndex,
             randomElementBlock: ArrayHelper.randomArrayElement,
@@ -79,16 +94,22 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testSetAdd() {
         self.performTimeTest(SetHelper.generateSet,
-            operationBlock: { (var set: Set<String>) -> () in
+            operationBlock: { (var set: Set<String>) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 set.insert(testString + String(Random.rndInt(0, to: maxRandomNumber)))
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             structureName: "Set", operationName: "Add")
     }
     
     func testSetDelete() {
         self.performTimeTest(SetHelper.generateSet,
-            operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> () in
+            operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 set.remove(randomElement!)
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: SetHelper.randomSetIndex,
             randomElementBlock: SetHelper.randomSetElement,
@@ -97,8 +118,11 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testSetCheckContain() {
         self.performTimeTest(SetHelper.generateSet,
-            operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> () in
+            operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 let constant = contains(set, randomElement!)
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: SetHelper.randomSetIndex,
             randomElementBlock: SetHelper.randomSetElement,
@@ -109,17 +133,23 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testDictionaryAdd() {
         self.performTimeTest(DictionaryHelper.generateDictionary,
-            operationBlock: { (var dict: [String: String]) -> () in
+            operationBlock: { (var dict: [String: String]) -> NSTimeInterval in
                 let uniqueKey = testString + String(dict.count)
-                dict[uniqueKey] = (testString + String(Random.rndInt(0, to: maxRandomNumber)))
+                  let start = CACurrentMediaTime()
+                dict[uniqueKey] = self.randomString()
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             structureName: "Dictionary", operationName: "Add")
     }
     
     func testDictionaryUpdate() {
         self.performTimeTest(DictionaryHelper.generateDictionary,
-            operationBlock: { (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
-                dictionary[randomIndex!] = (testString + String(Random.rndInt(0, to: maxRandomNumber)))
+            operationBlock: { (var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
+                dictionary[randomIndex!] = self.randomString()
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
             randomElementBlock: DictionaryHelper.randomDictionaryElement,
@@ -128,8 +158,11 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testDictionaryReadByKey() {
         self.performTimeTest(DictionaryHelper.generateDictionary,
-            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 let constant = dictionary[randomIndex!]
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
             randomElementBlock: DictionaryHelper.randomDictionaryElement,
@@ -138,8 +171,11 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testDictionaryDeleteByKey() {
         self.performTimeTest(DictionaryHelper.generateDictionary,
-            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 dictionary.removeValueForKey(randomIndex!)
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
             randomElementBlock: DictionaryHelper.randomDictionaryElement,
@@ -148,12 +184,19 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
     
     func testDictionaryCheckContain() {
         self.performTimeTest(DictionaryHelper.generateDictionary,
-            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> () in
+            operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> NSTimeInterval in
+                  let start = CACurrentMediaTime()
                 contains(dictionary.values, randomElement!)
+                let finish = CACurrentMediaTime()
+                return finish - start
             },
             randomIndexBlock: DictionaryHelper.randomDictionaryIndex,
             randomElementBlock: DictionaryHelper.randomDictionaryElement,
             structureName: "Dictionary", operationName: "ContainsRandom")
+    }
+    
+    private func randomString() -> String {
+        return testString + String(Random.rndInt(0, to: maxRandomNumber))
     }
     
 }
