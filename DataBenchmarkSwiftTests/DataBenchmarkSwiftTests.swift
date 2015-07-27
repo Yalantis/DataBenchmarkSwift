@@ -80,7 +80,7 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
         self.performTimeTest(ArrayHelper.generateArray,
             operationBlock: {(var array: [String], randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
                   let start = CACurrentMediaTime()
-                let constant = contains(array, randomElement!)
+                let constant = array.contains(randomElement!)
                 let finish = CACurrentMediaTime()
                 return finish - start
             },
@@ -120,7 +120,7 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
         self.performTimeTest(SetHelper.generateSet,
             operationBlock: {(var set: Set<String>, randomIndex: Int?, randomElement: String?) -> NSTimeInterval in
                   let start = CACurrentMediaTime()
-                let constant = contains(set, randomElement!)
+                let constant = set.contains(randomElement!)
                 let finish = CACurrentMediaTime()
                 return finish - start
             },
@@ -186,7 +186,7 @@ class DataBenchmarkSwiftTests: PerformanceTestCase {
         self.performTimeTest(DictionaryHelper.generateDictionary,
             operationBlock: {(var dictionary: [String: String], randomIndex: String?, randomElement: String?) -> NSTimeInterval in
                   let start = CACurrentMediaTime()
-                contains(dictionary.values, randomElement!)
+                dictionary.values.contains(randomElement!)
                 let finish = CACurrentMediaTime()
                 return finish - start
             },

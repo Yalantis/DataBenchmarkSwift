@@ -121,15 +121,15 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
             self.right?.remove(key)
         } else {
             switch(self.left, self.right) {
-            case let(.None, .None):
+            case (.None, .None):
                 self.parent = nil
-            case let(.Some(left), .None):
+            case (.Some(let left), .None):
                 self.storedValue = left.storedValue
                 self.left = nil
-            case let(.None, .Some(right)):
+            case (.None, .Some(let right)):
                 self.storedValue = right.storedValue
                 self.right = nil
-            case let(.Some(left), .Some(right)):
+            case (.Some, .Some(let right)):
                 let successor = right.findMinNode()
                 self.storedValue = successor.storedValue
                 successor.remove(successor.storedValue.key)
@@ -168,21 +168,21 @@ extension BinaryTreeNode {
     func rotateRight() {
         switch(self.type) {
         case .Root:
-            println("cannot rotate root")
+            print("cannot rotate root")
         case .Left:
             self.right?.moveNode(toNode: self.parent!, asLeftChild: true)
             self.parent?.moveNode(toNode: self, asLeftChild: false)
         case .Right:
-            println("Right rotation for right branch ins't implemented")
+            print("Right rotation for right branch ins't implemented")
         }
     }
     
     func rotateLeft() {
         switch(self.type) {
         case .Root:
-            println("cannot rotate root")
+            print("cannot rotate root")
         case .Left:
-            println("Left rotation for left branch ins't implemented")
+            print("Left rotation for left branch ins't implemented")
         case .Right:
             self.left?.moveNode(toNode: self.parent!, asLeftChild: false)
             self.parent?.moveNode(toNode: self, asLeftChild: true)
