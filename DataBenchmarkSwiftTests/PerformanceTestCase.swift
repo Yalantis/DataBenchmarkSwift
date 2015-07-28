@@ -19,9 +19,9 @@ class PerformanceTestCase : XCTestCase {
     func performTimeTest<S>(prepareBlock: (Int) -> S, operationBlock: (S) -> NSTimeInterval, structureName: String, operationName: String) {
         var attemptsWithSumTime = [NSTimeInterval](count: maxElementsInStructure, repeatedValue: 0)
         
-        for attempt in 0..<attemptsCount {
+        for _ in 0..<attemptsCount {
             for elementCount in 0..<maxElementsInStructure {
-                var structure = prepareBlock(elementCount)
+                let structure = prepareBlock(elementCount)
                 let time = operationBlock(structure)
                 attemptsWithSumTime[elementCount] = attemptsWithSumTime[elementCount] + time
             }
@@ -33,7 +33,7 @@ class PerformanceTestCase : XCTestCase {
     func performTimeTest<S, E, I>(prepareBlock: (Int) -> S, operationBlock: (S, I?, E?) -> NSTimeInterval, randomIndexBlock: (S) -> I, randomElementBlock: (S, I) -> E, structureName: String, operationName: String) {
         var attemptsWithSumTime = [NSTimeInterval](count: maxElementsInStructure, repeatedValue: 0)
         
-        for attempt in 0..<attemptsCount {
+        for _ in 0..<attemptsCount {
             for elementCount in 0..<maxElementsInStructure {
                 if (elementCount == 0) {
                     continue
@@ -58,7 +58,7 @@ class PerformanceTestCase : XCTestCase {
         //write to csv
         let path = NSHomeDirectory().stringByAppendingPathComponent(structureName + "-" + operationName + ".csv")
         let fileManager = NSFileManager.defaultManager()
-        fileManager.removeItemAtPath(path, error: nil)
+        try! fileManager.removeItemAtPath(path)
         
         let output = NSOutputStream.outputStreamToMemory()
         let delimiter: unichar = 44 // comma unichar
@@ -76,6 +76,6 @@ class PerformanceTestCase : XCTestCase {
         
         let buffer: NSData = output.propertyForKey(NSStreamDataWrittenToMemoryStreamKey) as! NSData
         let csv = NSString(data: buffer, encoding: NSUTF8StringEncoding)
-        csv?.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding, error: nil)
+        try! csv?.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding)
     }
 }
