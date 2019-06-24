@@ -16,24 +16,24 @@ let maxElementsInStructure = 500
 
 class PerformanceTestCase : XCTestCase {
     
-    func performTimeTest<S>(prepareBlock: (Int) -> S, operationBlock: (S) -> NSTimeInterval, structureName: String, operationName: String) {
-        var attemptsWithSumTime = [NSTimeInterval](count: maxElementsInStructure, repeatedValue: 0)
+    func performTimeTest<S>(prepareBlock: (Int) -> S, operationBlock: (S) -> TimeInterval, structureName: String, operationName: String) {
+        var attemptsWithSumTime = [TimeInterval](repeating: 0, count: maxElementsInStructure)
         
-        for attempt in 0..<attemptsCount {
+        for _ in 0..<attemptsCount {
             for elementCount in 0..<maxElementsInStructure {
-                var structure = prepareBlock(elementCount)
+                let structure = prepareBlock(elementCount)
                 let time = operationBlock(structure)
                 attemptsWithSumTime[elementCount] = attemptsWithSumTime[elementCount] + time
             }
         }
         
-        self.writeToCSV(structureName, operationName: operationName, attemptsWithSumTime: attemptsWithSumTime)
+        self.writeToCSV(structureName: structureName, operationName: operationName, attemptsWithSumTime: attemptsWithSumTime)
     }
     
-    func performTimeTest<S, E, I>(prepareBlock: (Int) -> S, operationBlock: (S, I?, E?) -> NSTimeInterval, randomIndexBlock: (S) -> I, randomElementBlock: (S, I) -> E, structureName: String, operationName: String) {
-        var attemptsWithSumTime = [NSTimeInterval](count: maxElementsInStructure, repeatedValue: 0)
+    func performTimeTest<S, E, I>(prepareBlock: (Int) -> S, operationBlock: (S, I?, E?) -> TimeInterval, randomIndexBlock: (S) -> I, randomElementBlock: (S, I) -> E, structureName: String, operationName: String) {
+        var attemptsWithSumTime = [TimeInterval](repeating: 0, count: maxElementsInStructure)
         
-        for attempt in 0..<attemptsCount {
+        for _ in 0..<attemptsCount {
             for elementCount in 0..<maxElementsInStructure {
                 if (elementCount == 0) {
                     continue
@@ -51,31 +51,36 @@ class PerformanceTestCase : XCTestCase {
             }
         }
         
-        self.writeToCSV(structureName, operationName: operationName, attemptsWithSumTime: attemptsWithSumTime)
+        self.writeToCSV(structureName: structureName, operationName: operationName, attemptsWithSumTime: attemptsWithSumTime)
     }
     
-    private func writeToCSV(structureName: String, operationName: String, attemptsWithSumTime: [NSTimeInterval]) {
+    private func writeToCSV(structureName: String, operationName: String, attemptsWithSumTime: [TimeInterval]) {
         //write to csv
-        let path = NSHomeDirectory().stringByAppendingPathComponent(structureName + "-" + operationName + ".csv")
-        let fileManager = NSFileManager.defaultManager()
-        fileManager.removeItemAtPath(path, error: nil)
-        
-        let output = NSOutputStream.outputStreamToMemory()
-        let delimiter: unichar = 44 // comma unichar
-        let writer = CHCSVWriter(outputStream: output, encoding: NSUTF8StringEncoding, delimiter: delimiter)
-        writer.writeField("")
-        writer.writeField("Swift")
-        writer.finishLine()
-        for elementCount in 0..<maxElementsInStructure {
-            let average = attemptsWithSumTime[elementCount] / NSTimeInterval(attemptsCount)
-            writer.writeField(elementCount)
-            writer.writeField(average)
-            writer.finishLine()
+        do {
+            let documentDirectory = try FileManager.default.url(
+                for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true
+            )
+            let path = documentDirectory.appendingPathComponent(structureName + "-" + operationName + ".csv")
+            try? FileManager.default.removeItem(atPath: path.absoluteString)
+            
+            let output = OutputStream.toMemory()
+            let delimiter: unichar = 44 // comma unichar
+            let writer = CHCSVWriter(outputStream: output, encoding: String.Encoding.utf8.rawValue, delimiter: delimiter)
+            //        writer?.writeField("")
+            writer?.writeField("Swift")
+            writer?.finishLine()
+            for elementCount in 0..<maxElementsInStructure {
+                let average = attemptsWithSumTime[elementCount] / TimeInterval(attemptsCount)
+                writer?.writeField(average)
+                writer?.writeField(elementCount)
+                writer?.finishLine()
+            }
+            writer?.closeStream()
+            let buffer: Data = output.property(forKey: Stream.PropertyKey.dataWrittenToMemoryStreamKey) as! Data
+            let csv = String(data: buffer, encoding: String.Encoding.utf8)
+            try csv?.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+        } catch {
+            print(error)
         }
-        writer.closeStream()
-        
-        let buffer: NSData = output.propertyForKey(NSStreamDataWrittenToMemoryStreamKey) as! NSData
-        let csv = NSString(data: buffer, encoding: NSUTF8StringEncoding)
-        csv?.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding, error: nil)
     }
 }

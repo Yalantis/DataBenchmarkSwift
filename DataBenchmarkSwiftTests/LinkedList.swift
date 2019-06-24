@@ -8,8 +8,9 @@
 
 import Foundation
 
-class LinkedList<T: Equatable>: SequenceType {
-    private var startNode: LinkedNode<T>?
+class LinkedList<T: Equatable>: Sequence {
+    
+    var startNode: LinkedNode<T>?
     
     init() {
         
@@ -18,9 +19,9 @@ class LinkedList<T: Equatable>: SequenceType {
     init(value: T) {
         self.startNode = LinkedNode(value: value)
     }
-
-    func generate() -> LinkedListGenerator<T> {
-        return LinkedListGenerator(list: self)
+    
+    func makeIterator() -> LinkedListIterator<T> {
+        return LinkedListIterator(list: self)
     }
 }
 
@@ -124,7 +125,7 @@ class Queue<T: Equatable>: OptimizedLinkedList<T> {
     }
 }
 
-struct LinkedListGenerator<T : Equatable>: GeneratorType {
+struct LinkedListIterator<T : Equatable>: IteratorProtocol {
     let list: LinkedList<T>
     var currentNode: LinkedNode<T>?
     

@@ -15,20 +15,20 @@ class BinarySearchTree<K: Comparable, V> {
         if (self.root == nil) {
             self.root = BinaryTreeNode(value: storage)
         } else {
-            self.root!.insert(storage)
+            self.root!.insert(storage: storage)
         }
     }
     
     func remove(key: K) {
-        self.root?.remove(key)
+        self.root?.remove(key: key)
     }
     
     func find(key: K) -> V? {
-       return self.root?.find(key)
+        return self.root?.find(key: key)
     }
     
-    func traverse(type: TraverseType, callback: (storage: DataStorage<K, V>) -> Void) {
-        self.root?.traverse(type, callback: callback)
+    func traverse(type: TraverseType, callback: (DataStorage<K, V>) -> Void) {
+        self.root?.traverse(type: type, callback: callback)
     }
 }
 

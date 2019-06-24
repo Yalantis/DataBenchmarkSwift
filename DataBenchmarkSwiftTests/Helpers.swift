@@ -11,7 +11,7 @@ import Foundation
 class ArrayHelper {
     class func generateArray(elementCount: Int) -> [String] {
         var testArray = [String]()
-        for var i = 0; i < elementCount; i++ {
+        for i in 0..<elementCount {
             testArray.append(testString + String(i))
         }
         
@@ -19,7 +19,7 @@ class ArrayHelper {
     }
     
     class func randomArrayIndex(array: [String]) -> Int {
-        return Random.rndInt(0, to: array.count - 1)
+        return Random.rndInt(from: 0, to: array.count - 1)
     }
     
     class func randomArrayElement(array: [String], randomIndex: Int) -> String {
@@ -30,7 +30,7 @@ class ArrayHelper {
 class SetHelper {
     class func generateSet(elementCount: Int) -> Set<String> {
         var testSet = Set<String>()
-        for var i = 0; i < elementCount; i++ {
+        for i in 0..<elementCount {
             testSet.insert(testString + String(i))
         }
         
@@ -38,7 +38,7 @@ class SetHelper {
     }
     
     class func randomSetIndex(set: Set<String>) -> Int {
-        return Random.rndInt(0, to: set.count - 1)
+        return Random.rndInt(from: 0, to: set.count - 1)
     }
     
     class func randomSetElement(set: Set<String>, randomIndex: Int) -> String {
@@ -49,7 +49,7 @@ class SetHelper {
 class DictionaryHelper {
     class func generateDictionary(elementCount: Int) -> [String: String] {
         var testDictionary = [String: String]()
-        for var i = 0; i < elementCount; i++ {
+        for i in 0..<elementCount {
             testDictionary[String(i)] = testString + String(i)
         }
         
@@ -57,7 +57,7 @@ class DictionaryHelper {
     }
     
     class func randomDictionaryIndex(dict: [String: String]) -> String {
-        return String(Random.rndInt(0, to: dict.count - 1))
+        return String(Random.rndInt(from: 0, to: dict.count - 1))
     }
     
     class func randomDictionaryElement(dict: [String: String], randomIndex: String) -> String {
