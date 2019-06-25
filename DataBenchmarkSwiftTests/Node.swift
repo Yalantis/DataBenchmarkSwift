@@ -90,13 +90,13 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
             if (self.left == nil) {
                 self.left = BinaryTreeNode(value: storage)
             } else {
-                self.left!.insert(storage)
+                self.left!.insert(storage: storage)
             }
         } else {
             if (self.right == nil) {
                 self.right = BinaryTreeNode(value: storage)
             } else {
-                self.right!.insert(storage)
+                self.right!.insert(storage: storage)
             }
         }
     }
@@ -107,50 +107,50 @@ class BinaryTreeNode<K: Comparable, V>: Node<DataStorage<K, V>> {
         }
         
         if (key < self.storedValue.key && self.left != nil) {
-            return self.left!.find(key)
+            return self.left!.find(key: key)
         } else if (key > self.storedValue.key && self.right != nil) {
-            return self.right!.find(key)
+            return self.right!.find(key: key)
         }
         return nil
     }
     
     func remove(key: K) {
         if (key < self.storedValue.key) {
-            self.left?.remove(key)
+            self.left?.remove(key: key)
         } else if (key > self.storedValue.key) {
-            self.right?.remove(key)
+            self.right?.remove(key: key)
         } else {
             switch(self.left, self.right) {
-            case let(.None, .None):
+            case (.none, .none):
                 self.parent = nil
-            case let(.Some(left), .None):
+            case let(.some(left), .none):
                 self.storedValue = left.storedValue
                 self.left = nil
-            case let(.None, .Some(right)):
+            case let(.none, .some(right)):
                 self.storedValue = right.storedValue
                 self.right = nil
-            case let(.Some(left), .Some(right)):
+            case let(.some, .some(right)):
                 let successor = right.findMinNode()
                 self.storedValue = successor.storedValue
-                successor.remove(successor.storedValue.key)
+                successor.remove(key: successor.storedValue.key)
             }
         }
     }
     
-    func traverse(type: TraverseType, callback: (storage: DataStorage<K, V>) -> Void) {
+    func traverse(type: TraverseType, callback: (DataStorage<K, V>) -> Void) {
         switch (type) {
         case .InOrder:
-            self.left?.traverse(type, callback: callback)
-            callback(storage: self.storedValue)
-            self.right?.traverse(type, callback: callback)
+            self.left?.traverse(type: type, callback: callback)
+            callback(self.storedValue)
+            self.right?.traverse(type: type, callback: callback)
         case .PreOrder:
-            callback(storage: self.storedValue)
-            self.left?.traverse(type, callback: callback)
-            self.right?.traverse(type, callback: callback)
+            callback(self.storedValue)
+            self.left?.traverse(type: type, callback: callback)
+            self.right?.traverse(type: type, callback: callback)
         case .PostOrder:
-            self.left?.traverse(type, callback: callback)
-            self.right?.traverse(type, callback: callback)
-            callback(storage: self.storedValue)
+            self.left?.traverse(type: type, callback: callback)
+            self.right?.traverse(type: type, callback: callback)
+            callback(self.storedValue)
         }
     }
     
@@ -168,21 +168,21 @@ extension BinaryTreeNode {
     func rotateRight() {
         switch(self.type) {
         case .Root:
-            println("cannot rotate root")
+            print("cannot rotate root")
         case .Left:
             self.right?.moveNode(toNode: self.parent!, asLeftChild: true)
             self.parent?.moveNode(toNode: self, asLeftChild: false)
         case .Right:
-            println("Right rotation for right branch ins't implemented")
+            print("Right rotation for right branch ins't implemented")
         }
     }
     
     func rotateLeft() {
         switch(self.type) {
         case .Root:
-            println("cannot rotate root")
+            print("cannot rotate root")
         case .Left:
-            println("Left rotation for left branch ins't implemented")
+            print("Left rotation for left branch ins't implemented")
         case .Right:
             self.left?.moveNode(toNode: self.parent!, asLeftChild: false)
             self.parent?.moveNode(toNode: self, asLeftChild: true)

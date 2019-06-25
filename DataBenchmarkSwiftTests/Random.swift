@@ -19,18 +19,18 @@ class Random {
     }
     
     class func rndBool() -> Bool {
-        return Random.rndInt(0, to: 1) == 1;
+        return Random.rndInt(from: 0, to: 1) == 1;
     }
     
     class func willHappen(probability: Double) -> Bool {
-        return Random.rndDouble(0, to: 1) <= probability
+        return Random.rndDouble(from: 0, to: 1) <= probability
     }
     
     class func oneof<T>(array: Array<T>) -> T {
         if (array.count == 1) {
             return array[0]
         }
-        let index = Random.rndInt(0, to: array.count - 1)
+        let index = Random.rndInt(from: 0, to: array.count - 1)
         return array[index]
     }
 }
